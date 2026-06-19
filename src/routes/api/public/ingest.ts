@@ -107,7 +107,7 @@ export const Route = createFileRoute("/api/public/ingest")({
               severity: e.severity ?? "info",
               title: e.title,
               description: e.description ?? null,
-              raw: e.raw ?? {},
+              raw: (e.raw ?? {}) as never,
               occurred_at: e.occurred_at ?? new Date().toISOString(),
             }));
             const { error } = await supabaseAdmin.from("endpoint_events").insert(rows);

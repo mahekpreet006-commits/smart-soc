@@ -14,6 +14,7 @@ import { Route as EndpointsRouteImport } from './routes/endpoints'
 import { Route as ArchitectureRouteImport } from './routes/architecture'
 import { Route as AgentRouteImport } from './routes/agent'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicIngestRouteImport } from './routes/api/public/ingest'
 
 const EventsRoute = EventsRouteImport.update({
   id: '/events',
@@ -40,6 +41,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicIngestRoute = ApiPublicIngestRouteImport.update({
+  id: '/api/public/ingest',
+  path: '/api/public/ingest',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/architecture': typeof ArchitectureRoute
   '/endpoints': typeof EndpointsRoute
   '/events': typeof EventsRoute
+  '/api/public/ingest': typeof ApiPublicIngestRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/architecture': typeof ArchitectureRoute
   '/endpoints': typeof EndpointsRoute
   '/events': typeof EventsRoute
+  '/api/public/ingest': typeof ApiPublicIngestRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,33 @@ export interface FileRoutesById {
   '/architecture': typeof ArchitectureRoute
   '/endpoints': typeof EndpointsRoute
   '/events': typeof EventsRoute
+  '/api/public/ingest': typeof ApiPublicIngestRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/agent' | '/architecture' | '/endpoints' | '/events'
+  fullPaths:
+    | '/'
+    | '/agent'
+    | '/architecture'
+    | '/endpoints'
+    | '/events'
+    | '/api/public/ingest'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/agent' | '/architecture' | '/endpoints' | '/events'
-  id: '__root__' | '/' | '/agent' | '/architecture' | '/endpoints' | '/events'
+  to:
+    | '/'
+    | '/agent'
+    | '/architecture'
+    | '/endpoints'
+    | '/events'
+    | '/api/public/ingest'
+  id:
+    | '__root__'
+    | '/'
+    | '/agent'
+    | '/architecture'
+    | '/endpoints'
+    | '/events'
+    | '/api/public/ingest'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +105,7 @@ export interface RootRouteChildren {
   ArchitectureRoute: typeof ArchitectureRoute
   EndpointsRoute: typeof EndpointsRoute
   EventsRoute: typeof EventsRoute
+  ApiPublicIngestRoute: typeof ApiPublicIngestRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/ingest': {
+      id: '/api/public/ingest'
+      path: '/api/public/ingest'
+      fullPath: '/api/public/ingest'
+      preLoaderRoute: typeof ApiPublicIngestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -125,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   ArchitectureRoute: ArchitectureRoute,
   EndpointsRoute: EndpointsRoute,
   EventsRoute: EventsRoute,
+  ApiPublicIngestRoute: ApiPublicIngestRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

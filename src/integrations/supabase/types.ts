@@ -14,7 +14,98 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      endpoint_events: {
+        Row: {
+          agent_id: string
+          created_at: string
+          description: string | null
+          endpoint_id: string | null
+          event_type: string
+          id: string
+          occurred_at: string
+          raw: Json | null
+          severity: string
+          title: string
+        }
+        Insert: {
+          agent_id: string
+          created_at?: string
+          description?: string | null
+          endpoint_id?: string | null
+          event_type: string
+          id?: string
+          occurred_at?: string
+          raw?: Json | null
+          severity?: string
+          title: string
+        }
+        Update: {
+          agent_id?: string
+          created_at?: string
+          description?: string | null
+          endpoint_id?: string | null
+          event_type?: string
+          id?: string
+          occurred_at?: string
+          raw?: Json | null
+          severity?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "endpoint_events_endpoint_id_fkey"
+            columns: ["endpoint_id"]
+            isOneToOne: false
+            referencedRelation: "endpoints"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      endpoints: {
+        Row: {
+          agent_id: string
+          agent_version: string | null
+          hostname: string
+          id: string
+          ip_address: string | null
+          last_seen: string
+          metadata: Json | null
+          os_version: string | null
+          registered_at: string
+          risk_score: number
+          status: string
+          username: string | null
+        }
+        Insert: {
+          agent_id: string
+          agent_version?: string | null
+          hostname: string
+          id?: string
+          ip_address?: string | null
+          last_seen?: string
+          metadata?: Json | null
+          os_version?: string | null
+          registered_at?: string
+          risk_score?: number
+          status?: string
+          username?: string | null
+        }
+        Update: {
+          agent_id?: string
+          agent_version?: string | null
+          hostname?: string
+          id?: string
+          ip_address?: string | null
+          last_seen?: string
+          metadata?: Json | null
+          os_version?: string | null
+          registered_at?: string
+          risk_score?: number
+          status?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

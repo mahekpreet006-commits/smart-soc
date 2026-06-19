@@ -9,38 +9,135 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as EventsRouteImport } from './routes/events'
+import { Route as EndpointsRouteImport } from './routes/endpoints'
+import { Route as ArchitectureRouteImport } from './routes/architecture'
+import { Route as AgentRouteImport } from './routes/agent'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicIngestRouteImport } from './routes/api/public/ingest'
 
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EndpointsRoute = EndpointsRouteImport.update({
+  id: '/endpoints',
+  path: '/endpoints',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArchitectureRoute = ArchitectureRouteImport.update({
+  id: '/architecture',
+  path: '/architecture',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentRoute = AgentRouteImport.update({
+  id: '/agent',
+  path: '/agent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicIngestRoute = ApiPublicIngestRouteImport.update({
+  id: '/api/public/ingest',
+  path: '/api/public/ingest',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agent': typeof AgentRoute
+  '/architecture': typeof ArchitectureRoute
+  '/endpoints': typeof EndpointsRoute
+  '/events': typeof EventsRoute
+  '/api/public/ingest': typeof ApiPublicIngestRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agent': typeof AgentRoute
+  '/architecture': typeof ArchitectureRoute
+  '/endpoints': typeof EndpointsRoute
+  '/events': typeof EventsRoute
+  '/api/public/ingest': typeof ApiPublicIngestRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agent': typeof AgentRoute
+  '/architecture': typeof ArchitectureRoute
+  '/endpoints': typeof EndpointsRoute
+  '/events': typeof EventsRoute
+  '/api/public/ingest': typeof ApiPublicIngestRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/agent'
+    | '/architecture'
+    | '/endpoints'
+    | '/events'
+    | '/api/public/ingest'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/agent'
+    | '/architecture'
+    | '/endpoints'
+    | '/events'
+    | '/api/public/ingest'
+  id:
+    | '__root__'
+    | '/'
+    | '/agent'
+    | '/architecture'
+    | '/endpoints'
+    | '/events'
+    | '/api/public/ingest'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgentRoute: typeof AgentRoute
+  ArchitectureRoute: typeof ArchitectureRoute
+  EndpointsRoute: typeof EndpointsRoute
+  EventsRoute: typeof EventsRoute
+  ApiPublicIngestRoute: typeof ApiPublicIngestRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/endpoints': {
+      id: '/endpoints'
+      path: '/endpoints'
+      fullPath: '/endpoints'
+      preLoaderRoute: typeof EndpointsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/architecture': {
+      id: '/architecture'
+      path: '/architecture'
+      fullPath: '/architecture'
+      preLoaderRoute: typeof ArchitectureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agent': {
+      id: '/agent'
+      path: '/agent'
+      fullPath: '/agent'
+      preLoaderRoute: typeof AgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +145,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/ingest': {
+      id: '/api/public/ingest'
+      path: '/api/public/ingest'
+      fullPath: '/api/public/ingest'
+      preLoaderRoute: typeof ApiPublicIngestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgentRoute: AgentRoute,
+  ArchitectureRoute: ArchitectureRoute,
+  EndpointsRoute: EndpointsRoute,
+  EventsRoute: EventsRoute,
+  ApiPublicIngestRoute: ApiPublicIngestRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

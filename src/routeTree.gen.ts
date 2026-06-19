@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as EndpointsRouteImport } from './routes/endpoints'
 import { Route as ArchitectureRouteImport } from './routes/architecture'
+import { Route as AgentRouteImport } from './routes/agent'
 import { Route as IndexRouteImport } from './routes/index'
 
 const EventsRoute = EventsRouteImport.update({
@@ -29,6 +30,11 @@ const ArchitectureRoute = ArchitectureRouteImport.update({
   path: '/architecture',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AgentRoute = AgentRouteImport.update({
+  id: '/agent',
+  path: '/agent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +43,14 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agent': typeof AgentRoute
   '/architecture': typeof ArchitectureRoute
   '/endpoints': typeof EndpointsRoute
   '/events': typeof EventsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agent': typeof AgentRoute
   '/architecture': typeof ArchitectureRoute
   '/endpoints': typeof EndpointsRoute
   '/events': typeof EventsRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agent': typeof AgentRoute
   '/architecture': typeof ArchitectureRoute
   '/endpoints': typeof EndpointsRoute
   '/events': typeof EventsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/architecture' | '/endpoints' | '/events'
+  fullPaths: '/' | '/agent' | '/architecture' | '/endpoints' | '/events'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/architecture' | '/endpoints' | '/events'
-  id: '__root__' | '/' | '/architecture' | '/endpoints' | '/events'
+  to: '/' | '/agent' | '/architecture' | '/endpoints' | '/events'
+  id: '__root__' | '/' | '/agent' | '/architecture' | '/endpoints' | '/events'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgentRoute: typeof AgentRoute
   ArchitectureRoute: typeof ArchitectureRoute
   EndpointsRoute: typeof EndpointsRoute
   EventsRoute: typeof EventsRoute
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArchitectureRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/agent': {
+      id: '/agent'
+      path: '/agent'
+      fullPath: '/agent'
+      preLoaderRoute: typeof AgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgentRoute: AgentRoute,
   ArchitectureRoute: ArchitectureRoute,
   EndpointsRoute: EndpointsRoute,
   EventsRoute: EventsRoute,
